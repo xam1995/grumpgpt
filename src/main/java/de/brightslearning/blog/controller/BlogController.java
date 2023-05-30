@@ -62,6 +62,11 @@ public class BlogController {
         return "/register";
     }
 
+    @GetMapping("/new")
+    public String showNewEntry(Model model){
+        return "/post";
+    }
+
 //    @PostMapping("/createEntry")
 //    public String createEntry(@RequestParam){
 //

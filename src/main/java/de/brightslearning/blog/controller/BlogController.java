@@ -67,6 +67,11 @@ public class BlogController {
         return "/post";
     }
 
+    @GetMapping("/edit")
+    public String editPost(Model model){
+        return "/edit";
+    }
+
 //    @PostMapping("/createEntry")
 //    public String createEntry(@RequestParam){
 //
@@ -74,5 +79,4 @@ public class BlogController {
 //
 //     return "/";
 //     }
-
 }

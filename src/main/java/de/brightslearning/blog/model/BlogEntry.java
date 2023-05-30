@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,10 +14,10 @@ public class BlogEntry {
 
 
     private Integer id;
-   private String title;
-   private String content;
-   private Integer author_id;
-   private LocalDateTime timestamp;
+    private String title;
+    private String content;
+    private Integer author_id;
+    private LocalDateTime timestamp;
 
     @Override
     public String toString() {

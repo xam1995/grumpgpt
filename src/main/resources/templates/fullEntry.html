@@ -35,6 +35,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:text="${user != null} ? 'Logout' : ''" th:href="@{/logout}"></a>
+            </li>
         </ul>
     </div>
 </nav>

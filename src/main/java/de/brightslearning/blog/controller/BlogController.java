@@ -61,7 +61,6 @@ public class BlogController {
 
         if (optionalFakeUser.isPresent()) {
 
-
         }
         return "/fullEntry";
     }

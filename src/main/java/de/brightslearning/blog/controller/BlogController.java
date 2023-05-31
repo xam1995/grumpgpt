@@ -37,7 +37,7 @@ public class BlogController {
         // TODO: Try to login with a fake user, you shouldn't be able reach the log in page after that anymore
         // TODO: rerun spring application after that
         // TODO: look at the @PostConstruct in the fakeuserservice file
-        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("staaani123", "12345678");
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("staaani12", "12345678");
         model.addAttribute("user", optionalFakeUser.orElse(null));
 
         if (optionalFakeUser.isPresent()) {
@@ -56,7 +56,7 @@ public class BlogController {
     @GetMapping("/blog")
     public String showBlog(Model model, HttpServletResponse response){
 
-        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven45", "12345678");
         model.addAttribute("user", optionalFakeUser.orElse(null));
 
         if (optionalFakeUser.isPresent()) {

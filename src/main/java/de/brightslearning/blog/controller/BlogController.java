@@ -50,6 +50,7 @@ public class BlogController {
         }
 
         return "/login"; // if login was not successful
+
     }
 
     @GetMapping("/blog")
@@ -76,9 +77,24 @@ public class BlogController {
     }
 
     @GetMapping("/edit")
-    public String editPost(Model model){
-        return "/edit";
-    }
+    public String editPost(Model model, HttpServletResponse response){
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        model.addAttribute("user", optionalFakeUser.orElse(null));
+
+        if (optionalFakeUser.isPresent() && optionalFakeUser.get().isAdmin()) {
+
+                Session newSession = new Session(optionalFakeUser.get(), Instant.now().plusSeconds(7 * 24 * 60 * 60));
+                fakeSessionService.save(newSession);
+
+                Cookie cookie = new Cookie("sessionId", newSession.getId());
+                response.addCookie(cookie);
+
+                return "/edit";
+
+        }
+        return "redirect:/";
+   }
+
 
 //    @PostMapping("/createEntry")
 //    public String createEntry(@RequestParam){

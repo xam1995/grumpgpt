@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -56,6 +57,12 @@ public class UserService {
         return this.users.stream()
                 .filter(user -> user.getUsername()
                         .equals(username)).toList().get(0);
+    }
+    public Optional<User> getByUsernameAndPassword(String username, String password) {
+        return this.users.stream()
+                .filter(user ->
+                        user.getUsername().equals(username)
+                        && user.getPassword().equals(password)).findFirst();
     }
 
     public User getByMail(String mail) {

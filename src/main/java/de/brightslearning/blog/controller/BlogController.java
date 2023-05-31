@@ -53,7 +53,15 @@ public class BlogController {
     }
 
     @GetMapping("/blog")
-    public String showBlog(Model model){
+    public String showBlog(Model model, HttpServletResponse response){
+
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        model.addAttribute("user", optionalFakeUser.orElse(null));
+
+        if (optionalFakeUser.isPresent()) {
+
+
+        }
         return "/fullEntry";
     }
 

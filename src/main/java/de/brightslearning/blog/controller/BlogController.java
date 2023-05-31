@@ -29,7 +29,11 @@ public class BlogController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-       return "/home";
+
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        model.addAttribute("user", optionalFakeUser.orElse(null));
+
+        return "/home";
     }
 
     @GetMapping("/login")
@@ -67,17 +71,25 @@ public class BlogController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model){
+
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        model.addAttribute("user", optionalFakeUser.orElse(null));
+
         return "/register";
     }
 
     @GetMapping("/new")
     public String showNewEntry(Model model){
+
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
+        model.addAttribute("user", optionalFakeUser.orElse(null));
+
         return "/post";
     }
 
     @GetMapping("/edit")
     public String editPost(Model model, HttpServletResponse response){
-        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven123", "12345678");
+        Optional<User> optionalFakeUser = fakeUserService.getByUsernameAndPassword("steven456", "12345678");
         model.addAttribute("user", optionalFakeUser.orElse(null));
 
         if (optionalFakeUser.isPresent() && optionalFakeUser.get().isAdmin()) {
@@ -89,7 +101,6 @@ public class BlogController {
                 response.addCookie(cookie);
 
                 return "/edit";
-
         }
         return "redirect:/";
    }

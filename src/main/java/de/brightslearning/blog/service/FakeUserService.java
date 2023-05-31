@@ -16,7 +16,6 @@ import java.util.Optional;
 public class FakeUserService {
     private List<User> fakeUserList;
 
-    @PostConstruct
     private void setup() {
 
         User fakeUser = new User(
@@ -41,6 +40,7 @@ public class FakeUserService {
 
     public FakeUserService() {
         this.fakeUserList = new ArrayList<>();
+        setup();
     }
 
     public void add(User user) {

@@ -3,7 +3,8 @@ package de.brightslearning.blog.persistance;
 import de.brightslearning.blog.model.BlogEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BlogDAO
-//        extends JpaRepository<BlogEntry, Integer>
-{
+import java.util.List;
+
+public interface BlogDAO extends JpaRepository<BlogEntry, Integer> {
+
 }

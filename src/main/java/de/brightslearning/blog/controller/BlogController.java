@@ -81,10 +81,10 @@ public class BlogController {
 
 
         //Get data from our services, later our database
-        BlogEntry blog = blogService.getById(Integer.parseInt(id));
+        Optional<BlogEntry> blog = blogService.getById(Integer.parseInt(id));
         Optional<User> user = userService.getUserById(1);
-        Optional<User> author = userService.getUserById(blog.getAuthor_id());
-        List<Comment> comments =  commentService.findAllForOneBlog(blog.getId());
+        Optional<User> author = userService.getUserById(blog.get().getAuthor_id());
+        List<Comment> comments =  commentService.findAllForOneBlog(blog.get().getId());
 
         //add empty comment
          Comment empytyComment = new Comment();
@@ -94,7 +94,7 @@ public class BlogController {
 
         //Data is sent to thymeleaf via package
         model.addAttribute("user", user.orElse(null));
-        model.addAttribute("blog", blog);
+        model.addAttribute("blog", blog.orElse(null));
         model.addAttribute("author", author.orElse(null));
         model.addAttribute("comments", comments );
 
@@ -115,6 +115,8 @@ public class BlogController {
     @GetMapping("/new")
     public String showNewEntry(Model model){
         Optional<User> user = userService.getByUsernameAndPassword("steven456", "12345678");
+        BlogEntry blogEntry = new BlogEntry();
+        model.addAttribute("blog", blogEntry);
 
         if (user.isPresent() && user.get().isAdmin()) {
             return "/post";
@@ -126,10 +128,10 @@ public class BlogController {
     @GetMapping("/edit/{id}")
     public String editPost(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
         Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("steven456", "12345678");
-        BlogEntry blog = blogService.getById(Integer.valueOf(id));
+        Optional<BlogEntry> blog = blogService.getById(Integer.valueOf(id));
 
         model.addAttribute("user", optionalFakeUser.orElse(null));
-        model.addAttribute("blog", blog);
+        model.addAttribute("blog", blog.orElse(null));
 
         if (optionalFakeUser.isPresent() && optionalFakeUser.get().isAdmin()) {
 

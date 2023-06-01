@@ -40,22 +40,22 @@
     </div>
 </nav>
 
-<div class="vh-100 text-white bg-secondary d-flex flex-column mt-5 my-md-auto" >
-<div class="bg-secondray" style="height: 70px"></div>
+<form class="vh-100 text-white bg-secondary d-flex flex-column mt-5 my-md-auto" method="POST" th:action="@{/saveblog}" th:object="${blog}">
+<div class="bg-secondary" style="height: 70px"></div>
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-left bg-secondary vh-100">
     <div class="mb-3">
         <label for="formControlInput1" class="form-label">Title</label>
-        <input type="email" class="form-control" id="formControlInput1" >
+        <input type="text" class="form-control" id="formControlInput1" th:field="${blog.title}">
     </div>
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Entry</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="${blog.content}"></textarea>
     </div>
         <button type="submit" class="btn btn-dark">POST</button>
     </div>
 
 
-</div>
+</form>
 
 
 

@@ -1,62 +1,41 @@
 package de.brightslearning.blog.service;
 
 import de.brightslearning.blog.model.BlogEntry;
-import jakarta.annotation.PostConstruct;
+import de.brightslearning.blog.persistance.BlogDAO;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class BlogService {
+private BlogDAO blogDAO;
 
-    ArrayList<BlogEntry> blogEntries = new ArrayList<>();
-
-
-
-    @PostConstruct
-    private void generateData(){
-        this.blogEntries.add(new BlogEntry(1, "Warum Numa die tollste Hündin ist",
-                "1. Sie ist süß. 2. Sie ist lieb. 3. Sie stinkt nicht. ",
-                1, LocalDateTime.now()));
-
+    public BlogService(BlogDAO blogDAO) {
+        this.blogDAO = blogDAO;
     }
 
     public Integer returnSize(){
-        return blogEntries.size();
+        return blogDAO.findAll().size();
     }
 
 
-    public ArrayList<BlogEntry> findAll() {
-       return this.blogEntries;
+    public List<BlogEntry> findAll() {
+        return blogDAO.findAll();
     }
 
     public void save(BlogEntry entry){
-        this.blogEntries.add(entry);
+        this.blogDAO.save(entry);
     }
 
     public void delete(Integer id){
-
-        for(BlogEntry entry: blogEntries){
-            if(entry.getId().equals(id)){
-                this.blogEntries.remove(entry);
-            }
-        }
+        blogDAO.deleteById(id);
     }
 
 
-    public BlogEntry getById(Integer id){
-        for(BlogEntry entry: this.blogEntries){
-            if(entry.getId().equals(id)){
-               return entry;
-            }
-        }
-    //TODO: als Stream umwandeln
-    return null; //Null pointer Exception wird gefürchtet
-
-
+    public Optional<BlogEntry> getById(Integer id){
+    return this.blogDAO.findById(id);
     }
 }
 

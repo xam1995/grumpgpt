@@ -1,5 +1,7 @@
 package de.brightslearning.blog.controller;
 
+import de.brightslearning.blog.model.BlogEntry;
+import de.brightslearning.blog.model.Comment;
 import de.brightslearning.blog.model.Session;
 import de.brightslearning.blog.model.User;
 import de.brightslearning.blog.service.*;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Instant;
@@ -36,8 +39,17 @@ public class BlogController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-       return "/home";
+
+        List<BlogEntry> blogs = blogService.findAll();
+        model.addAttribute("blogs", blogs);
+
+
+
+        return "/home";
     }
+
+
+
 
     @GetMapping("/login")
     public String showLogIn(Model model, HttpServletResponse response){
@@ -68,15 +80,22 @@ public class BlogController {
         return "redirect:/";
     }
 
-    @GetMapping("/blog")
-    public String showBlog(Model model, HttpServletResponse response){
+    @GetMapping("/blog/{id}")
+    public String showBlog(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
 
-        Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("staaani123", "12345678");
-        model.addAttribute("user", optionalFakeUser.orElse(null));
+        //Get data from our services, later our database
+        BlogEntry blog = blogService.getById(Integer.parseInt(id));
+        Optional<User> user = userService.getUserById(1);
+        Optional<User> author = userService.getUserById(blog.getAuthor_id());
+        Optional<Comment> comments =  commentService.findAllForOneBlog(blog.getId());
 
-        if (optionalFakeUser.isPresent()) {
+        //Data is sent to thymeleaf via package
+        model.addAttribute("user", user.orElse(null));
+        model.addAttribute("blog", blog);
+        model.addAttribute("author", author.orElse(null));
+        model.addAttribute("comments", comments.orElse(null) );
 
-        }
+
         return "/fullEntry";
     }
 
@@ -93,13 +112,22 @@ public class BlogController {
 
     @GetMapping("/new")
     public String showNewEntry(Model model){
-        return "/post";
+        Optional<User> user = userService.getByUsernameAndPassword("steven456", "12345678");
+
+        if (user.isPresent() && user.get().isAdmin()) {
+            return "/post";
+        }
+        return "redirect:/";
     }
 
-    @GetMapping("/edit")
-    public String editPost(Model model, HttpServletResponse response){
+    // id stands for blog that will be edited
+    @GetMapping("/edit/{id}")
+    public String editPost(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
         Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("steven123", "12345678");
+        BlogEntry blog = blogService.getById(1);
+
         model.addAttribute("user", optionalFakeUser.orElse(null));
+        model.addAttribute("blog", blog);
 
         if (optionalFakeUser.isPresent() && optionalFakeUser.get().isAdmin()) {
 

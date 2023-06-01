@@ -71,6 +71,10 @@ public class UserService {
                         .equals(mail)).toList().get(0);
     }
 
+    public Optional<User> getUserById(Integer id){
+        return this.users.stream().filter(user -> user.getId().equals(id)).findFirst();
+    }
+
     public List<User> findAdmins() {
         return this.users.stream()
                 .filter(User::isAdmin).toList();

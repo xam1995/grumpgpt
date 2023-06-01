@@ -2,12 +2,14 @@ package de.brightslearning.blog.service;
 
 import de.brightslearning.blog.model.BlogEntry;
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
 
+@Service
 public class BlogService {
 
     ArrayList<BlogEntry> blogEntries = new ArrayList<>();

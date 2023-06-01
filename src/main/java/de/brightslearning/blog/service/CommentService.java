@@ -2,11 +2,15 @@ package de.brightslearning.blog.service;
 
 import de.brightslearning.blog.model.Comment;
 import jakarta.annotation.PostConstruct;
+import org.springframework.data.util.Optionals;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 
+@Service
 public class CommentService {
 
     private ArrayList<Comment> comments  = new ArrayList<>();
@@ -20,15 +24,10 @@ public class CommentService {
 
     }
 
-    public ArrayList<Comment> findAllForOneBlog(Integer blog_id){
+    public Optional<Comment> findAllForOneBlog(Integer blog_id){
 
-        ArrayList<Comment> commentsForOneEntry = new ArrayList<>();
-       for(Comment comment : this.comments){
-           if(comment.getBlog_id().equals(blog_id)){
-               commentsForOneEntry.add(comment);
-           }
-       }
-       return commentsForOneEntry;
+      return  this.comments.stream().filter(comment -> comment.getBlog_id().equals(blog_id)).findAny();
+
     }
 
 

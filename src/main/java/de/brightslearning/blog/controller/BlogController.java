@@ -2,9 +2,7 @@ package de.brightslearning.blog.controller;
 
 import de.brightslearning.blog.model.Session;
 import de.brightslearning.blog.model.User;
-import de.brightslearning.blog.service.FakeSessionService;
-import de.brightslearning.blog.service.FakeUserService;
-import de.brightslearning.blog.service.UserService;
+import de.brightslearning.blog.service.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,11 +21,17 @@ public class BlogController {
 
     private FakeSessionService fakeSessionService;
 
+    private BlogService blogService;
+    private CommentService commentService;
+
+
     //public BlogService bs;
     @Autowired
-    public BlogController(UserService userService, FakeSessionService fakeSessionService) {
+    public BlogController(UserService userService, FakeSessionService fakeSessionService, BlogService blogService, CommentService commentService) {
         this.userService = userService;
         this.fakeSessionService = fakeSessionService;
+        this.blogService = blogService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/")
@@ -77,6 +82,12 @@ public class BlogController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model){
+        Optional<User> user = userService.getByUsernameAndPassword("staaani123", "12345678");
+
+        if(user.isPresent()){
+            return "redirect:/";
+        }
+
         return "/register";
     }
 
@@ -99,8 +110,8 @@ public class BlogController {
                 response.addCookie(cookie);
 
                 return "/edit";
-
         }
+
         return "redirect:/";
    }
 

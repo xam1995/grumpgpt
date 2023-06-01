@@ -66,7 +66,7 @@
                 <h3 class="pb-2">Comments</h3>
 
                 <!-- ################################################# -->
-                <form th:each="comment, stats: ${comments}" th>
+                <form th:each="comment, stats: ${comments}" th:o>
                     <p>
                         <span th:text="${'#' + stats.count}"></span>
                         <span th:text="${'User#' + comment.author_id}"></span>:

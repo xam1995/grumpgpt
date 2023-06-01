@@ -47,11 +47,10 @@
         <div class="w-75">
             <div class="py-2 d-flex justify-content-between">
                 <div>
-                    <h3>Welcome</h3>
-                    <p><span>GrumpGPT</span> | <span>2023-05-26 10:30</span></p>
+                    <h3 th:text="${blog.title}"></h3>
+                    <p><span th:text="${blog.author_id}"></span> | <span th:text="${blog.timestamp}"></span></p>
                 </div>
                 <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}">Edit</a>
-                <!--                <a th:unless="${user == null}"></a>-->
             </div>
             <div id="typewriter" class="pb-3"></div>
             <div class="pb-3" id="content"><h3>Bla bla bla</h3>
@@ -76,12 +75,12 @@
                 <h3 class="pb-2">Comments</h3>
 
                 <!-- ################################################# -->
-                <form th:each="comment: ${comments}">
+                <form th:each="comment, stats: ${comments}">
                     <p>
-                        <span >#1</span>
-                        <span th:text="${comment.author_id}">Stani</span>:
-                        <span th:text="${comment.content}">Hello, hello...!</span>
-                        <a class="btn btn-secondary ml-2">Delete</a>
+                        <span th:text="${'#' + stats.count}"></span>
+                        <span th:text="${'User#' + comment.author_id}"></span>:
+                        <span th:text="${comment.content}"></span>
+                        <a class="btn btn-secondary ml-2" th:if="${user.getId.equals(comment.author_id)}">Delete</a>
                     </p>
                 </form>
                 <!-- ################################################ -->

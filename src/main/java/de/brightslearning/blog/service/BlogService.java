@@ -24,6 +24,10 @@ public class BlogService {
 
     }
 
+    public Integer returnSize(){
+        return blogEntries.size();
+    }
+
 
     public ArrayList<BlogEntry> findAll() {
        return this.blogEntries;

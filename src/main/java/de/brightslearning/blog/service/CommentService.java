@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,11 +23,12 @@ public class CommentService {
     private void generateData(){
         this.comments.add(new Comment(1, "Erster!", 1, 1, LocalDateTime.now()));
 
+
     }
 
-    public Optional<Comment> findAllForOneBlog(Integer blog_id){
+    public List<Comment> findAllForOneBlog(Integer blog_id){
 
-      return  this.comments.stream().filter(comment -> comment.getBlog_id().equals(blog_id)).findAny();
+      return  this.comments.stream().filter(comment -> comment.getBlog_id().equals(blog_id)).toList();
 
     }
 

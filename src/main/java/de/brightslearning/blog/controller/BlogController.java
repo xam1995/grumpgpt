@@ -10,9 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -83,17 +81,24 @@ public class BlogController {
     @GetMapping("/blog/{id}")
     public String showBlog(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
 
+
         //Get data from our services, later our database
         BlogEntry blog = blogService.getById(Integer.parseInt(id));
         Optional<User> user = userService.getUserById(1);
         Optional<User> author = userService.getUserById(blog.getAuthor_id());
-        Optional<Comment> comments =  commentService.findAllForOneBlog(blog.getId());
+        List<Comment> comments =  commentService.findAllForOneBlog(blog.getId());
+
+        //add empty comment
+         Comment empytyComment = new Comment();
+         model.addAttribute("newComment", empytyComment);
+
+
 
         //Data is sent to thymeleaf via package
         model.addAttribute("user", user.orElse(null));
         model.addAttribute("blog", blog);
         model.addAttribute("author", author.orElse(null));
-        model.addAttribute("comments", comments.orElse(null) );
+        model.addAttribute("comments", comments );
 
         return "/fullEntry";
     }
@@ -141,6 +146,41 @@ public class BlogController {
 
         return "redirect:/";
    }
+
+
+
+   @PostMapping("/saveblog")
+    public String save(@ModelAttribute("blog")  BlogEntry blog){
+
+        blogService.save(blog);
+        return "redirect:/";
+
+   }
+
+
+
+   @PostMapping("/savecomment")
+   public  String save(@ModelAttribute("comment")Comment comment, @ModelAttribute("blog") BlogEntry blog){
+        commentService.save(comment);
+
+
+        return "redirect:/blog/" + blog.getId();
+   }
+
+   @DeleteMapping("/deleteblog")
+    public String deleteBlog(@ModelAttribute("blog") BlogEntry blog){
+        blogService.delete(blog.getId());
+
+        List<Comment> allCommentsOneBlog = commentService.findAllForOneBlog(blog.getId());
+
+         for(Comment comment : allCommentsOneBlog){
+             commentService.delete(comment.getId());
+         }
+
+        return "redirect:/";
+   }
+
+
 
 
 //    @PostMapping("/createEntry")

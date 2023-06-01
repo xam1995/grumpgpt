@@ -49,7 +49,7 @@ public class BlogController {
 
     @GetMapping("/login")
     public String showLogIn(Model model, HttpServletResponse response){
-        Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("staaani12", "12345678");
+        Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("staaani123", "12345678");
         model.addAttribute("user", optionalFakeUser.orElse(null));
 
         if (optionalFakeUser.isPresent()) {
@@ -125,7 +125,7 @@ public class BlogController {
     // id stands for blog that will be edited
     @GetMapping("/edit/{id}")
     public String editPost(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
-        Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("steven123", "12345678");
+        Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("steven456", "12345678");
         BlogEntry blog = blogService.getById(Integer.valueOf(id));
 
         model.addAttribute("user", optionalFakeUser.orElse(null));

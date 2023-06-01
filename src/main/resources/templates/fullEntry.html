@@ -65,8 +65,8 @@
             <div class="mx-auto">
                 <h3 class="pb-2">Comments</h3>
 
-                <!-- ################################################# -->
-                <form th:each="comment, stats: ${comments}" th:o>
+                <!-- ##################Form for deleting############################### -->
+                <form th:each="comment, stats: ${comments}"> <!-- ################## -->
                     <p>
                         <span th:text="${'#' + stats.count}"></span>
                         <span th:text="${'User#' + comment.author_id}"></span>:
@@ -76,11 +76,13 @@
                 </form>
                 <!-- ################################################ -->
 
-                <form>
+                <form method="POST" th:object="${newComment}" th:action="@{/savecomment}">
                     <div class="form-group">
                         <input type="text" class="form-control w-100 bg-secondary" style="color: white" id="comment"
                                placeholder="Share your thoughts..." th:if="${user != null}">
                         <!--                        <input th:unless="${user == null}"></input>-->
+                        <input type="hidden" id="author_id" th:field="${newComment.author_id}">
+                        <input type="hidden" id="blog_id" th:field="${newComment.blog_id}">
                     </div>
                     <button type="submit" class="btn btn-secondary" th:if="${user != null}">Submit</button>
                     <a class="btn" th:if="${user != null}">Delete</a>

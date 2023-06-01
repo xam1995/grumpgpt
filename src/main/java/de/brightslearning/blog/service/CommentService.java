@@ -22,6 +22,7 @@ public class CommentService {
     @PostConstruct
     private void generateData(){
         this.comments.add(new Comment(1, "Erster!", 1, 1, LocalDateTime.now()));
+        this.comments.add(new Comment(2, "lustig!", 2, 1, LocalDateTime.now()));
 
 
     }

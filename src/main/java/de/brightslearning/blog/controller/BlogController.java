@@ -41,8 +41,6 @@ public class BlogController {
         List<BlogEntry> blogs = blogService.findAll();
         model.addAttribute("blogs", blogs);
 
-
-
         return "/home";
     }
 
@@ -128,7 +126,7 @@ public class BlogController {
     @GetMapping("/edit/{id}")
     public String editPost(Model model, HttpServletResponse response, @PathVariable(name = "id") String id){
         Optional<User> optionalFakeUser = userService.getByUsernameAndPassword("steven123", "12345678");
-        BlogEntry blog = blogService.getById(1);
+        BlogEntry blog = blogService.getById(Integer.valueOf(id));
 
         model.addAttribute("user", optionalFakeUser.orElse(null));
         model.addAttribute("blog", blog);

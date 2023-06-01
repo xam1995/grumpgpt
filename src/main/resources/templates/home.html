@@ -1,4 +1,4 @@
-<html lang="en" data-kantu="1">
+<html lang="en" data-kantu="1" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,7 +43,7 @@
 
 <div class="my-5 p-5 text-center text-white">
     <div class="d-flex flex-column justify-content-center flex-sm-column flex-md-row align-items-center">
-        <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" >
+        <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" th:each="blog : ${blogs}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${blog.title}"></h5>
                 <p class="card-text" th:text="${blog.author_id}"></p>
@@ -52,44 +52,18 @@
                 <a href="#" class="btn btn-dark" th:href="@{/blog/{id}(id=${blog.id})}">Go Somewhere</a>
             </div>
         </div>
-        <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" >
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Author</p>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-dark">Go somewhere</a>
-            </div>
-        </div>
-        <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" >
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Author</p>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-dark">Go somewhere</a>
-            </div>
-        </div>
     </div>
 </div>
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-<!--
-<script src="/js/chatgptanimation.js"></script>
--->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
-
-
 </body>
 </html>

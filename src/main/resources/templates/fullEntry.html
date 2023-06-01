@@ -53,17 +53,8 @@
                 <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}">Edit</a>
             </div>
             <div id="typewriter" class="pb-3"></div>
-            <div class="pb-3" id="content"><h3>Bla bla bla</h3>
-                Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+            <div class="pb-3" id="content" th:text="${blog.content}">
+
             </div>
             <a class="btn btn-dark" th:if="${user != null && user.isAdmin()}">Delete</a>
             <!--            <a th:unless="${user == null}"></a>-->
@@ -75,7 +66,7 @@
                 <h3 class="pb-2">Comments</h3>
 
                 <!-- ################################################# -->
-                <form th:each="comment, stats: ${comments}">
+                <form th:each="comment, stats: ${comments}" th>
                     <p>
                         <span th:text="${'#' + stats.count}"></span>
                         <span th:text="${'User#' + comment.author_id}"></span>:

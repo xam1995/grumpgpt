@@ -30,7 +30,7 @@
                 <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="${user != null && ()} ? ${user.getUsername()} : 'Login'"></a>
+                <a class="nav-link" href="#" th:text="${user != null} ? ${user.getUsername()} : 'Login'"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
@@ -51,7 +51,7 @@
                     <p><span>GrumpGPT</span> | <span>2023-05-26 10:30</span></p>
                 </div>
                 <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}">Edit</a>
-<!--                <a th:unless="${user == null}"></a>-->
+                <!--                <a th:unless="${user == null}"></a>-->
             </div>
             <div id="typewriter" class="pb-3"></div>
             <div class="pb-3" id="content"><h3>Bla bla bla</h3>
@@ -67,7 +67,7 @@
                 bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
             </div>
             <a class="btn btn-dark" th:if="${user != null && user.isAdmin()}">Delete</a>
-<!--            <a th:unless="${user == null}"></a>-->
+            <!--            <a th:unless="${user == null}"></a>-->
         </div>
     </div>
     <div class="mx-auto w-100 p-3 text-white bg-dark d-flex justify-content-center align-items-center text-left">
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control w-100 bg-secondary" style="color: white" id="comment"
                                placeholder="Share your thoughts..." th:if="${user != null}">
-<!--                        <input th:unless="${user == null}"></input>-->
+                        <!--                        <input th:unless="${user == null}"></input>-->
                     </div>
                     <button type="submit" class="btn btn-secondary" th:if="${user != null}">Submit</button>
                     <a class="btn" th:if="${user != null}">Delete</a>

@@ -74,6 +74,18 @@
         <div class="w-75">
             <div class="mx-auto">
                 <h3 class="pb-2">Comments</h3>
+
+                <!-- ################################################# -->
+                <form th:each="comment: ${comments}">
+                    <p>
+                        <span >#1</span>
+                        <span th:text="${comment.author_id}">Stani</span>:
+                        <span th:text="${comment.content}">Hello, hello...!</span>
+                        <a class="btn btn-secondary ml-2">Delete</a>
+                    </p>
+                </form>
+                <!-- ################################################ -->
+
                 <form>
                     <div class="form-group">
                         <input type="text" class="form-control w-100 bg-secondary" style="color: white" id="comment"

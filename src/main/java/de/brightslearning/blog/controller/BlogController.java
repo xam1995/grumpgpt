@@ -95,7 +95,6 @@ public class BlogController {
         model.addAttribute("author", author.orElse(null));
         model.addAttribute("comments", comments.orElse(null) );
 
-
         return "/fullEntry";
     }
 

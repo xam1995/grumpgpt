@@ -25,6 +25,7 @@ private BlogDAO blogDAO;
         return blogDAO.findAllByOrderByTimestampDesc();
     }
 
+
     public void save(BlogEntry entry){
         this.blogDAO.save(entry);
     }

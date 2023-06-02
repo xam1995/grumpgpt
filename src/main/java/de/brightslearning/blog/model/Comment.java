@@ -35,30 +35,6 @@ public class Comment {
         this.timestamp = timestamp;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Integer getAuthor_id() {
-        return author_id;
-    }
-
-    public Integer getBlog_id() {
-        return blog_id;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Comment{" +

@@ -128,6 +128,13 @@ public class BlogController {
         return "redirect:/";
     }
 
+    @GetMapping("/makeadmin")
+    public String makeAdmin(Model model){
+       List<User> allUsers = userService.findAll();
+       model.addAttribute("users", allUsers);
+       return "/makeAdmin";
+    }
+
 
     @PostMapping("/saveblog")
     public String save(@ModelAttribute("blog") BlogEntry blog, @ModelAttribute("sessionUser") User sessionUser) {
@@ -150,6 +157,12 @@ public class BlogController {
     public String deleteBlog(@ModelAttribute("blog") BlogEntry blog) {
         blogService.delete(blog.getId());
 
+        return "redirect:/";
+    }
+
+    @PostMapping("/makeadmin")
+    public String makeAdmin(@ModelAttribute("user") User user){
+        userService.makeAdmin(user.getUsername());
         return "redirect:/";
     }
 

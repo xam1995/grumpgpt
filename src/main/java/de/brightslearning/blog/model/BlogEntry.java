@@ -36,26 +36,6 @@ public class BlogEntry {
         this.timestamp = timestamp;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Integer getAuthor_id() {
-        return author_id;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
     @Override
     public String toString() {
         return "BlogEntry{" +

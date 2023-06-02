@@ -56,7 +56,7 @@
 <!--&------>
 
 <div class="my-5 p-5 text-center text-white">
-    <div class="d-flex flex-column justify-content-center flex-sm-column flex-md-row align-items-center">
+    <div class="d-flex flex-column flex-wrap justify-content-center flex-sm-column flex-md-row align-items-center">
         <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" th:each="blog : ${blogs}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${blog.title}"></h5>

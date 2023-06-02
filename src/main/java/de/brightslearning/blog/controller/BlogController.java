@@ -48,7 +48,7 @@ public class BlogController {
     }
 
     @GetMapping("/blog/{id}")
-    public String showBlog(Model model, HttpServletResponse response, @PathVariable(name = "id") String id, @ModelAttribute("sessionUser") User sessionUser) {
+    public String showBlog(Model model, @PathVariable(name = "id") String id, @ModelAttribute("sessionUser") User sessionUser) {
 
         //Get data from our services, later our database
         Optional<BlogEntry> blog = blogService.getById(Integer.parseInt(id));
@@ -57,6 +57,11 @@ public class BlogController {
 
         //add empty comment
         Comment empytyComment = new Comment();
+        if (sessionUser != null) {
+            empytyComment.setAuthor_id(sessionUser.getId());
+        }
+        empytyComment.setBlogId(blog.get().getId());
+
         model.addAttribute("newComment", empytyComment);
 
         //Data is sent to thymeleaf via package
@@ -92,7 +97,7 @@ public class BlogController {
 
 
     @GetMapping("welcome")
-    public String showWelcomePage(Model model){
+    public String showWelcomePage(Model model) {
         return "/welcome";
     }
 
@@ -114,7 +119,7 @@ public class BlogController {
 
     // id stands for blog that will be edited
     @GetMapping("/edit/{id}")
-    public String editPost(Model model, HttpServletResponse response, @PathVariable(name = "id") String id, @ModelAttribute("sessionUser") User sessionUser) {
+    public String editPost(Model model, @PathVariable(name = "id") String id, @ModelAttribute("sessionUser") User sessionUser) {
         Optional<User> optionalUser = userService.getByUsernameAndPassword(sessionUser.getUsername(), sessionUser.getPassword());
         Optional<BlogEntry> blog = blogService.getById(Integer.valueOf(id));
 
@@ -129,10 +134,10 @@ public class BlogController {
     }
 
     @GetMapping("/makeadmin")
-    public String makeAdmin(Model model){
-       List<User> allUsers = userService.findAll();
-       model.addAttribute("users", allUsers);
-       return "/makeAdmin";
+    public String makeAdmin(Model model) {
+        List<User> allUsers = userService.findAll();
+        model.addAttribute("users", allUsers);
+        return "/makeAdmin";
     }
 
 
@@ -148,9 +153,10 @@ public class BlogController {
     }
 
     @PostMapping("/savecomment")
-    public String save(@ModelAttribute("comment") Comment comment, @ModelAttribute("blog") BlogEntry blog) {
+    public String save(@ModelAttribute("newComment") Comment comment, @ModelAttribute("blog") BlogEntry blog, @ModelAttribute("sessionUser") User user) {
+        comment.setTimestamp(LocalDateTime.now());
         commentService.save(comment);
-        return "redirect:/blog/" + blog.getId();
+        return "redirect:/";
     }
 
     @PostMapping("/deleteblog")
@@ -161,7 +167,7 @@ public class BlogController {
     }
 
     @PostMapping("/makeadmin")
-    public String makeAdmin(@ModelAttribute("user") User user){
+    public String makeAdmin(@ModelAttribute("user") User user) {
         userService.makeAdmin(user.getUsername());
         return "redirect:/";
     }

@@ -78,7 +78,7 @@
                         <span th:text="${'#' + stats.count}"></span>
                         <span th:text="${'User#' + comment.author_id}"></span>:
                         <span th:text="${comment.content}"></span>
-                        <a class="btn btn-secondary ml-2" th:if="${user.getId.equals(comment.author_id)}" >Delete</a>
+                        <a class="btn btn-secondary ml-2" th:if="${user != null && user.getId.equals(comment.author_id)}" >Think again</a>
                     </p>
                 </form>
                 <!-- ################################################ -->
@@ -86,11 +86,10 @@
                 <form method="POST" th:object="${newComment}" th:action="@{/savecomment}">
                     <div class="form-group">
                         <input type="text" class="form-control w-100 bg-secondary" style="color: white" id="comment"
-                               placeholder="Share your thoughts..." th:if="${user != null}">
-                        <!--                        <input th:unless="${user == null}"></input>-->
-                        <input type="hidden" id="author_id" th:field="${newComment.author_id}">
-                        <input type="hidden" id="blog_id" th:field="${newComment.blogId}">
+                               placeholder="Share your thoughts..." th:if="${user != null}" th:field="${newComment.content}">
                     </div>
+                    <input type="hidden" th:field="${newComment.blogId}">
+                    <input type="hidden" th:field="${newComment.author_id}">
                     <button type="submit" class="btn btn-secondary" th:if="${user != null}">Submit</button>
                     <a class="btn" th:if="${user != null}">Delete</a>
                 </form>

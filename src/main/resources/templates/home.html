@@ -62,9 +62,8 @@
         <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" th:each="blog : ${blogs}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${blog.title}"></h5>
-                <p class="card-text" th:text="${blog.author_id}"></p>
-                <p class="card-text" th:text="${blog.timestamp}"></p>
-                <p class="card-text text-truncated" th:text="${blog.content}"></p>
+                <p class="card-text" th:text="${#temporals.format(blog.timestamp, 'dd-MM-yyyy HH:mm')}"></p>
+                <p class="card-text d-inline-block text-truncated" style="max-width: 70px" th:text="${blog.content}"></p>
                 <a href="#" class="btn btn-dark" th:href="@{/blog/{id}(id=${blog.id})}">Go Somewhere</a>
             </div>
         </div>

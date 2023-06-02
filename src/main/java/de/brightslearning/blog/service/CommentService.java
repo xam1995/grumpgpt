@@ -1,55 +1,31 @@
 package de.brightslearning.blog.service;
 
 import de.brightslearning.blog.model.Comment;
-import jakarta.annotation.PostConstruct;
-import org.springframework.data.util.Optionals;
+import de.brightslearning.blog.persistance.CommentDAO;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class CommentService {
 
-    private ArrayList<Comment> comments  = new ArrayList<>();
+    private CommentDAO commentDAO;
 
-
-
-
-    @PostConstruct
-    private void generateData(){
-        this.comments.add(new Comment(1, "Erster!", 1, 1, LocalDateTime.now()));
-        this.comments.add(new Comment(2, "lustig!", 2, 1, LocalDateTime.now()));
-
-
+    public CommentService(CommentDAO commentDAO){
+        this.commentDAO = commentDAO;
     }
-
-    public List<Comment> findAllForOneBlog(Integer blog_id){
-
-      return  this.comments.stream().filter(comment -> comment.getBlog_id().equals(blog_id)).toList();
-
+    public List<Comment> findAllForOneBlog(Integer blog_id) {
+        return commentDAO.findCommentsByBlogId(blog_id);
     }
-
-
-    public Comment findCommentById(Integer commentID){
-
-    return this.comments.stream().filter(comment -> comment.getId() == commentID).findFirst().orElse(null);
-
+    public Comment findCommentById(Integer commentID) {
+        return commentDAO.findById(commentID).orElse(null);
     }
 
     public void save(Comment comment) {
-        this.comments.add(comment);
+        this.commentDAO.save(comment);
     }
 
-    public void delete(Integer commentID){
-
-        for(Comment comment : this.comments){
-            if(comment.getId().equals(commentID)){
-                this.comments.remove(comment);
-            }
-        }
+    public void delete(Integer commentID) {
+        commentDAO.deleteById(commentID);
     }
 }

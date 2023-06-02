@@ -22,8 +22,8 @@ public class Comment {
     private String content;
     @Column(name = "author_id")
     private Integer author_id;
-    @Column(name = "blog_id")
-    private Integer blog_id;
+    @Column(name = "blogId")
+    private Integer blogId;
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
 
@@ -31,7 +31,7 @@ public class Comment {
         this.id = id;
         this.content = content;
         this.author_id = author_id;
-        this.blog_id = blog_id;
+        this.blogId = blog_id;
         this.timestamp = timestamp;
     }
 
@@ -41,7 +41,7 @@ public class Comment {
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", author_id=" + author_id +
-                ", blog_id=" + blog_id +
+                ", blog_id=" + blogId +
                 ", timestamp=" + timestamp +
                 '}';
     }

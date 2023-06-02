@@ -30,8 +30,8 @@
                 <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:action="@{/logout}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:href="@{/login}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:href="@{/register}" th:text="${user == null} ? 'Register'"></a>
@@ -46,7 +46,7 @@
             <div class="py-2 d-flex justify-content-between">
                 <div>
                     <h3 th:text="${blog.title}"></h3>
-                    <p><span th:text="${blog.author_id}"></span> | <span th:text="${blog.timestamp}"></span></p>
+                    <p><span th:text="${author.name}"></span> | <span th:text="${#temporals.format(blog.timestamp, 'dd-MM-yyyy HH:mm')}"></span></p>
                 </div>
                 <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}" th:href="@{/edit/{id}(id=${blog.id})}">Edit</a>
             </div>
@@ -83,7 +83,7 @@
                                placeholder="Share your thoughts..." th:if="${user != null}">
                         <!--                        <input th:unless="${user == null}"></input>-->
                         <input type="hidden" id="author_id" th:field="${newComment.author_id}">
-                        <input type="hidden" id="blog_id" th:field="${newComment.blog_id}">
+                        <input type="hidden" id="blog_id" th:field="${newComment.blogId}">
                     </div>
                     <button type="submit" class="btn btn-secondary" th:if="${user != null}">Submit</button>
                     <a class="btn" th:if="${user != null}">Delete</a>

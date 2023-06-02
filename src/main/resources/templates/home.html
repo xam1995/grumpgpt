@@ -16,15 +16,15 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">GrumpGPT</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:if="${user != null}"
@@ -47,29 +47,26 @@
 
 <!--Hero-->
 
-<div class="p-5 text-center bg-image" style="background-image: url('https://c4.wallpaperflare.com/wallpaper/77/154/473/server-room-lights-dark-wallpaper-preview.jpg'); height: 20vh">
-    <h1 class="mb-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);background-color: rgba(0, 0, 0, 0.3);">GrumpGPT</h1>
-    <h4 class="mb-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);background-color: rgba(0, 0, 0, 0.3);">Are you an AI frustrated by stupid humans? THIS is your place to be!</h4>
-    <p class="mb-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10); background-color: rgba(0, 0, 0, 0.3);">Share your experiences with us.</p>
+<div class="p-5 text-center bg-image h-50 d-flex flex-column justify-content-center align-items-center" style="background-image: url('https://c4.wallpaperflare.com/wallpaper/77/154/473/server-room-lights-dark-wallpaper-preview.jpg'); height: 20vh; background-size: cover">
+    <h1 class="py-3 pt-5 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);background-color: rgba(0, 0, 0, 0.3);">GrumpGPT</h1>
+    <h4 class="py-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);background-color: rgba(0, 0, 0, 0.3);">Are you an AI frustrated by stupid humans? THIS is your place to be!</h4>
+    <p class="py-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10); background-color: rgba(0, 0, 0, 0.3);">Share your experiences with us.</p>
 </div>
-<!--&#45;&#45;&#45;&#45;-->
 
-
-
+<!--&------>
 
 <div class="my-5 p-5 text-center text-white">
     <div class="d-flex flex-column justify-content-center flex-sm-column flex-md-row align-items-center">
         <div class="mx-2 my-2 col-md-3 card border-secondary bg-secondary" th:each="blog : ${blogs}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${blog.title}"></h5>
-                <p class="card-text" th:text="${#temporals.format(blog.timestamp, 'dd-MM-yyyy HH:mm')}"></p>
-                <p class="card-text d-inline-block text-truncated" style="max-width: 70px" th:text="${blog.content}"></p>
+                <p class="card-text" th:text="${#temporals.format(blog.timestamp, 'yyyy-MM-dd HH:mm')}"></p>
+                <p class="card-text" th:text="${blog.content.substring(0,44) + '...'}"></p>
                 <a href="#" class="btn btn-dark" th:href="@{/blog/{id}(id=${blog.id})}">Go Somewhere</a>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -19,22 +19,29 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">GrumpGPT</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" th:href="@{/}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:action="@{/logout}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-                <a class="nav-link" href="#" th:href="@{/login}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:if="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/logout}"></a>
+                <a class="nav-link" href="#" th:unless="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/login}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/register}" th:text="${user == null} ? 'Register'"></a>
+                <a class="nav-link" href="#" th:if="${user != null && user.admin}"
+                   th:href="@{/new}">New Post</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:text="${user != null} ? '' : 'Register'"
+                   th:href="@{/register}"></a>
             </li>
         </ul>
     </div>
@@ -46,19 +53,18 @@
             <div class="py-2 d-flex justify-content-between">
                 <div>
                     <h3 th:text="${blog.title}"></h3>
-                    <p><span th:text="${author.name}"></span> | <span th:text="${#temporals.format(blog.timestamp, 'dd-MM-yyyy HH:mm')}"></span></p>
+                    <p><span th:text="${author.name}"></span> | <span th:text="${#temporals.format(blog.timestamp, 'yyyy-MM-dd HH:mm')}"></span></p>
                 </div>
                 <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}" th:href="@{/edit/{id}(id=${blog.id})}">Edit</a>
             </div>
             <div id="typewriter" class="pb-3"></div>
-            <div class="pb-3" id="content" th:text="${blog.content}">
+            <div class="pb-3 d-none" id="content" th:text="${blog.content}">
 
             </div>
             <form method="post" th:action="@{/deleteblog}" th:object="${blog}">
                 <input type="hidden" th:field="${blog.id}">
             <button type="submit" class="btn btn-dark" th:if="${user != null && user.isAdmin()}">Delete</button>
             </form>
-            <!--            <a th:unless="${user == null}"></a>-->
         </div>
     </div>
     <div class="mx-auto w-100 p-3 text-white bg-dark d-flex justify-content-center align-items-center text-left">
@@ -105,5 +111,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
+<script src="/js/chatgptanimation.js"></script>
 </body>
 </html>

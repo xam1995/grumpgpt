@@ -19,22 +19,29 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">GrumpGPT</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-          aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+          aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+  <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#" th:href="@{/}">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-        <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+        <a class="nav-link" href="#" th:if="${user != null}"
+           th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/logout}"></a>
+        <a class="nav-link" href="#" th:unless="${user != null}"
+           th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/login}"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" th:href="@{/register}" th:text="${user == null} ? 'Register'"></a>
+        <a class="nav-link" href="#" th:if="${user != null && user.admin}"
+           th:href="@{/new}">New Post</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" th:text="${user != null} ? '' : 'Register'"
+           th:href="@{/register}"></a>
       </li>
     </ul>
   </div>

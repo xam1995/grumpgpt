@@ -87,7 +87,13 @@ public class BlogController {
     @PostMapping("/registeruser")
     public String registerUser(@ModelAttribute("newUser") User user) {
         userService.save(user);
-        return "redirect:/";
+        return "redirect:/welcome";
+    }
+
+
+    @GetMapping("welcome")
+    public String showWelcomePage(Model model){
+        return "/welcome";
     }
 
     @GetMapping("/new")

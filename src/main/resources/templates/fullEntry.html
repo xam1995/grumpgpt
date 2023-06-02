@@ -34,7 +34,7 @@
                 <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
+                <a class="nav-link" href="#" th:href="@{/register}" th:text="${user == null} ? 'Register'"></a>
             </li>
         </ul>
     </div>
@@ -48,13 +48,16 @@
                     <h3 th:text="${blog.title}"></h3>
                     <p><span th:text="${blog.author_id}"></span> | <span th:text="${blog.timestamp}"></span></p>
                 </div>
-                <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}">Edit</a>
+                <a class="btn btn-dark h-50" th:if="${user != null && user.isAdmin()}" th:href="@{/edit/{id}(id=${blog.id})}">Edit</a>
             </div>
             <div id="typewriter" class="pb-3"></div>
             <div class="pb-3" id="content" th:text="${blog.content}">
 
             </div>
-            <a class="btn btn-dark" th:if="${user != null && user.isAdmin()}">Delete</a>
+            <form method="post" th:action="@{/deleteblog}" th:object="${blog}">
+                <input type="hidden" th:field="${blog.id}">
+            <button type="submit" class="btn btn-dark" th:if="${user != null && user.isAdmin()}">Delete</button>
+            </form>
             <!--            <a th:unless="${user == null}"></a>-->
         </div>
     </div>
@@ -69,7 +72,7 @@
                         <span th:text="${'#' + stats.count}"></span>
                         <span th:text="${'User#' + comment.author_id}"></span>:
                         <span th:text="${comment.content}"></span>
-                        <a class="btn btn-secondary ml-2" th:if="${user.getId.equals(comment.author_id)}">Delete</a>
+                        <a class="btn btn-secondary ml-2" th:if="${user.getId.equals(comment.author_id)}" >Delete</a>
                     </p>
                 </form>
                 <!-- ################################################ -->

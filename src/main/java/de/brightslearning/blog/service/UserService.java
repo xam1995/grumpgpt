@@ -2,94 +2,71 @@ package de.brightslearning.blog.service;
 
 
 import de.brightslearning.blog.model.User;
+import de.brightslearning.blog.persistance.UserDAO;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Getter
-@Setter
 @Service
 public class UserService {
 
-    @PostConstruct
-    private void setup(){
-        User fakeUser = new User(
-                1,
-                "Stani",
-                "staaani123",
-                "stani@gmail.com",
-                "12345678",
-                false
-        );
+    private UserDAO userdao;
 
-        User fakeAdmin = new User(
-                2,
-                "Steven",
-                "steven456",
-                "steven@gmail.com",
-                "12345678",
-                true
-        );
-
-        this.users.addAll(List.of(fakeUser, fakeAdmin));
+    public UserService(UserDAO userdao) {
+        this.userdao = userdao;
     }
 
-    private List<User> users = new ArrayList<>();
-
     public List<User> findAll() {
-        return this.users;
+        return this.userdao.findAll();
     }
 
     public void save(User user) {
-        this.users.add(user);
+        this.userdao.save(user);
     }
 
     public void delete(User user) {
-        this.users.remove(user);
+        this.userdao.delete(user);
     }
 
     public User getByUsername(String username) {
-        return this.users.stream()
-                .filter(user -> user.getUsername()
-                        .equals(username)).toList().get(0);
+        return this.userdao.findByUsername(username);
     }
+
     public Optional<User> getByUsernameAndPassword(String username, String password) {
-        return this.users.stream()
-                .filter(user ->
-                        user.getUsername().equals(username)
-                        && user.getPassword().equals(password)).findFirst();
+        return this.userdao.getByUsernameAndPassword(username, password);
     }
 
     public User getByMail(String mail) {
-        return this.users.stream()
-                .filter(user -> user.getEmail()
-                        .equals(mail)).toList().get(0);
+        return this.userdao.getByEmail(mail);
     }
 
-    public Optional<User> getUserById(Integer id){
-        return this.users.stream().filter(user -> user.getId().equals(id)).findFirst();
+    public Optional<User> getUserById(Integer id) {
+        return this.userdao.findById(id);
     }
 
     public List<User> findAdmins() {
-        return this.users.stream()
-                .filter(User::isAdmin).toList();
+        return this.userdao.findAll();
     }
 
     public List<User> findNonAdmins() {
-        return this.users.stream()
-                .filter(user -> !user.isAdmin()).toList();
+        return this.userdao.findAll();
     }
 
-    public void makeAdmin(String username){
-        getByUsername(username).setAdmin(true);
+    public void makeAdmin(String username) {
+        User user = getByUsername(username);
+        user.setAdmin(true);
+        this.userdao.save(user);
     }
 
-    public void removeAdmin(String username){
-        getByUsername(username).setAdmin(false);
+    public void removeAdmin(String username) {
+        User user = getByUsername(username);
+        user.setAdmin(false);
+        this.userdao.save(user);
     }
 }

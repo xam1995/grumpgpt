@@ -28,8 +28,10 @@
                 <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
@@ -43,28 +45,29 @@
     <div class="py-3 d-flex justify-content-center align-items-center">
 
 
-        <form class="d-flex flex-column align-items-center justify-content-center py-5">
+        <form class="d-flex flex-column align-items-center justify-content-center py-5" method="post"
+              th:object="${login}" th:action="@{/login}">
             <h1>Log in</h1>
-            <!-- Email input -->
             <div style="width: 300px;">
+                <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="form" class="form-control"/>
-                    <label class="form-label" for="form">Email address</label>
+                    <input type="text" id="form" class="form-control" th:field="${login.username}"/>
+                    <label class="form-label" for="form">Username</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                    <input type="password" id="form2" class="form-control"/>
+                    <input type="password" id="form2" class="form-control" th:field="${login.password}"/>
                     <label class="form-label" for="form2">Password</label>
                 </div>
 
-                <button type="button" class="btn btn-dark btn-block mb-4">Sign in</button>
+                <button type="submit" class="btn btn-dark btn-block mb-4">Sign in</button>
             </div>
 
 
             <!-- Register buttons -->
             <div class="text-center">
-                <p>Not a member? <a class="text-white" href="#!">Register</a></p>
+                <p>Not a member? <a class="text-white" href="#" th:href="@{/register}">Register</a></p>
 
             </div>
         </form>

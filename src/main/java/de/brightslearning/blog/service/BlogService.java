@@ -17,12 +17,12 @@ private BlogDAO blogDAO;
     }
 
     public Integer returnSize(){
-        return blogDAO.findAll().size();
+        return blogDAO.findAllByOrderByTimestampDesc().size();
     }
 
 
     public List<BlogEntry> findAll() {
-        return blogDAO.findAll();
+        return blogDAO.findAllByOrderByTimestampDesc();
     }
 
     public void save(BlogEntry entry){

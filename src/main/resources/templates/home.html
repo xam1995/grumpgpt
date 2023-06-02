@@ -27,11 +27,18 @@
                 <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:if="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/logout}"></a>
+                <a class="nav-link" href="#" th:unless="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'" th:href="@{/login}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
+                <a class="nav-link" href="#" th:if="${user != null && user.admin}"
+                   th:href="@{/new}">New Post</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:text="${user != null} ? '' : 'Register'"
+                   th:href="@{/register}"></a>
             </li>
         </ul>
     </div>
@@ -46,7 +53,6 @@
     <p class="mb-3 text-white" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 10); background-color: rgba(0, 0, 0, 0.3);">Share your experiences with us.</p>
 </div>
 <!--&#45;&#45;&#45;&#45;-->
-
 
 
 

@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title>Register</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Title</title>
 </head>
@@ -31,8 +31,10 @@
                 <a class="nav-link" href="#" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"th:text="${user != null} ? ${user.username} : 'Login'"></a>
-                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}" th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:href="@{/login}" th:if="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'"></a>
+                <a class="nav-link" href="#" th:href="@{/}" th:unless="${user != null}"
+                   th:text="${user != null} ? ${user.username} : 'Login'"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" th:text="${user == null} ? 'Register'"></a>
@@ -44,18 +46,26 @@
 <div class="vh-100 text-white bg-secondary d-flex flex-column mt-5 my-md-auto">
     <div class="position-relative overflow-hidden text-center bg-secondary vh-100 py-4" style="margin-top: 70px;">
         <h1>Registration</h1>
-        <form class="d-flex flex-column align-items-center justify-content-center">
-            <div class="form-group py-4">
+        <form class="d-flex flex-column align-items-center justify-content-center" method="post" th:object="${newUser}" th:action="@{/registeruser}">
+            <div class="form-group">
                 <label for="UserName">User Name</label>
-                <input type="email" class="form-control" id="UserName" aria-describedby="emailHelp" placeholder="Enter user name" style="width: 300px">
+                <input type="text" class="form-control" id="UserName" th:field="${newUser.username}"
+                       placeholder="Enter user name" style="width: 300px">
             </div>
             <div class="form-group">
-                <label for="InputEmail1">Email address</label>
-                <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email" style="width: 300px">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" id="Name" th:field="${newUser.name}"
+                       placeholder="Enter name" style="width: 300px">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style="width: 300px">
+                <label for="InputEmail">Email address</label>
+                <input type="email" class="form-control" id="InputEmail" th:field="${newUser.email}"
+                       placeholder="Enter email" style="width: 300px">
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" class="form-control" id="Password" placeholder="Password" th:field="${newUser.password}"
+                       style="width: 300px">
             </div>
             <div class="form-check py-2">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -69,20 +79,6 @@
         </form>
     </div>
 </div>
-
-<script>
-    const checkbox = document.getElementById("flexCheckDefault");
-    const submitButtonContainer = document.getElementById("submitButtonContainer");
-
-    checkbox.addEventListener("change", function() {
-        if (this.checked) {
-            submitButtonContainer.style.display = "block";
-        } else {
-            submitButtonContainer.style.display = "none";
-        }
-    });
-</script>
-
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
